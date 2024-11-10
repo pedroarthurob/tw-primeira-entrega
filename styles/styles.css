@@ -1,6 +1,6 @@
 /* Background image settings for the whole page */
 body {
-  background-image: url('castelo\ background.jpg'); /* Replace with actual path */
+  background-image: url('../assets/images/castelo_background.jpg'); /* Replace with actual path */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -142,9 +142,31 @@ button:hover, select:hover {
   position: absolute;
   width: 25px; /* Aumente o tamanho dos círculos */
   height: 25px;
+  border: 2px solid black;
   border-radius: 50%;
   background-color: #ffe4b5;
   transform: translate(-50%, -50%); /* Centraliza os círculos */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+
+.circle.hover {
+  background-color: lightgray;
+}
+
+/* Desabilitar o hover nos círculos */
+.no-hover {
+  pointer-events: none; /* Impede qualquer interação com o elemento */
+  opacity: 1; /* Deixa a opacidade normal para o círculo */
+}
+
+.jogador-X {
+  background-color: red;
+}
+
+.jogador-O {
+  background-color: blue;
 }
 
 /* Estilo para as linhas */
@@ -153,6 +175,7 @@ button:hover, select:hover {
   height: 3px;
   background-color: #ffe4b5;
   transform-origin: 0 0;
+  z-index: 1;
 }
 
 /* Linhas centrais */
