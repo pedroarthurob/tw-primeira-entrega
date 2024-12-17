@@ -122,19 +122,28 @@ button:hover, select:hover {
   color: #333;
 }
 
-/* CSS para o tabuleiro */
-#tabuleiroContainer {
-  display: none; /* Começa oculto e aparece ao iniciar o jogo */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75vh; /* Ocupa toda a altura da janela */
-  width: 100vw; /* Ocupa toda a largura da janela */
+html, body {
+  height: 100%; /* Garantir que o body ocupe toda a altura */
+  margin: 0;
+  padding: 0;
 }
 
-#tabuleiro {
-  position: relative;
+/* Ajuste do #tabuleiroContainer para centralizar o conteúdo */
+#tabuleiroContainer {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  height: 75vh; /* Altura de 75% da altura da janela */
+  width: 100vw; /* Largura de 100% da janela */
   margin: 0;
+  padding: 0;
+  position: relative; /* Para garantir que o posicionamento relativo do tabuleiro funcione */
+}
+
+/* Garantir que o tabuleiro ocupa o espaço adequado */
+#tabuleiro {
+  position: relative; /* Mantém o posicionamento do tabuleiro */
+  margin: 0 auto; /* Certifica que o tabuleiro seja centralizado horizontalmente */
 }
 
 /* Estilo para os círculos */
@@ -187,4 +196,104 @@ button:hover, select:hover {
 .line.center-line.vertical {
   width: 3px;
   background-color: #ffe4b5;
+}
+
+.pecas-container {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100px;
+  margin: 0 20px;
+}
+
+.pecas-container .peca {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 5px 0;
+}
+
+#jogador1Pecas .peca {
+  background-color: blue; /* Cor do jogador 1 */
+}
+
+#jogador2Pecas .peca {
+  background-color: red; /* Cor do jogador 2 */
+}
+
+/* Estilo para o modal */
+.modal {
+  display: none; /* Inicialmente oculto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro com transparência */
+  z-index: 1000; /* Sobrepõe outros elementos */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 0.6); /* Mesmo fundo escuro com transparência */
+  padding: 20px;
+  border-radius: 8px; /* Bordas arredondadas */
+  color: #ffe4b5; /* Cor clara para o texto */
+  border: 2px solid #ffe4b5; /* Borda dourada como no painel de configuração */
+  width: 80%; /* Largura do modal */
+  max-width: 600px; /* Limita a largura máxima */
+  max-height: 80vh; /* Limita a altura do modal */
+  overflow: hidden; /* Evita que o conteúdo ultrapasse os limites do modal */
+}
+
+/* Estilo para o texto do modal */
+.modal-text {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 1.1em;
+  max-height: 60vh; /* Define uma altura máxima para a área de texto */
+  overflow-y: auto; /* Torna o texto rolável verticalmente */
+  padding-right: 10px; /* Adiciona espaçamento à direita para a barra de rolagem */
+}
+
+/* Estilo para a barra de rolagem */
+.modal-text::-webkit-scrollbar {
+  width: 8px; /* Largura da barra de rolagem */
+}
+
+.modal-text::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 228, 181, 0.8); /* Cor do "polegar" da barra de rolagem */
+  border-radius: 8px; /* Arredonda os cantos do "polegar" da barra de rolagem */
+}
+
+.modal-text::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 228, 181, 1); /* Cor do "polegar" da barra de rolagem ao passar o mouse */
+}
+
+.modal-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3); /* Cor da trilha da barra de rolagem */
+  border-radius: 8px; /* Arredonda os cantos da trilha */
+}
+
+/* Estilo do título */
+.modal h2 {
+  font-family: 'Georgia', serif;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+/* Estilo do botão de fechar */
+.modal .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #ffe4b5;
+}
+
+.modal .close:hover {
+  color: #fff;
 }

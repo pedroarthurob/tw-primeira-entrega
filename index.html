@@ -50,12 +50,39 @@
   </div>
 
   <div id="tabuleiroContainer">
+    <div id="jogador1Pecas" class="pecas-container"></div>
     <div id="tabuleiro"></div>
+    <div id="jogador2Pecas" class="pecas-container"></div>
   </div>
-    <!-- Carregar arquivos JavaScript na ordem correta -->
-  <script src="scripts/GameConfig.js"></script>
+
+  <div id="modal-instrucoes" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Como Jogar: Trilha</h2>
+      <div class="modal-text">
+        <p><strong>Objetivo:</strong> Formar "moinhos" (linhas de 3 peças) que permitem a captura de peças do adversário e assim, reduzir o adversário a 2 peças ou bloquear todos os seus movimentos.</p>
+        <p><strong>Tabuleiro:</strong> Consiste em quadrados concêntricos conectados por linhas. Cada posição válida está nos cantos ou no meio dos lados.</p>
+        <p><strong>Peças:</strong> Cada jogador tem um conjunto de peças coloridas. Elas são colocadas ou movidas estrategicamente no tabuleiro.</p>
+        <p><strong>Como Jogar:</strong> O jogo tem duas fases:
+          <ul>
+            <li>1. Colocação: cada jogador posiciona uma peça alternadamente. Nessa fase não há capturas</li>
+            <li>2. Mover peças para posições adjacentes. Formar moinhos permite a captura de uma peça adversária. Se restarem 3 peças, movimento livre é permitido.</li>
+          </ul>
+        </p>
+        <p><strong>Como Ganhar:</strong> Vence quem deixar o adversário com 2 peças ou sem jogadas possíveis.</p>
+        <p><strong>Dicas:</strong> Planeje moinhos, proteja suas peças e bloqueie o oponente.</p>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  <!-- Carregar arquivos JavaScript na ordem correta -->
+  <script src="scripts/Tabuleiro.js"></script>
+  <script src="scripts/Jogador.js"></script>
+  <script src="scripts/Renderer.js"></script>
   <script src="scripts/GameState.js"></script>
-  <script src="scripts/JogoTrilha.js"></script>
+  <script src="scripts/InputHandler.js"></script>
   <script src="scripts/AI.js"></script>
   <script src="scripts/main.js"></script>
 </body>
