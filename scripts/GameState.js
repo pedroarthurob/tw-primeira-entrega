@@ -111,4 +111,36 @@ class GameState {
     return false;
   }
 
+  async startGame(nick, password, size) {
+    if (this.modoDeJogo === "multiplayer") {
+        const jogador = await registerPlayer(nick, password);
+        if (jogador) {
+            console.log("Jogador registrado:", jogador);
+            await joinGame(nick, password, size); 
+        }
+    }
+  }
+
+  async alternarTurno() {
+      if (this.modoDeJogo === "multiplayer") {
+          const { nick, password } = this;
+          const response = await notifyMove(nick, password, this.posicaoJogador, this.novaPosicaoJogador);
+          if (response) {
+              console.log('Turno alternado no servidor.');
+          }
+      }
+      this.turnoAtual = this.turnoAtual === 1 ? 2 : 1; // Alterna o turno
+  }
+
+  // Exemplo de um método de verificação de estado que pode ser útil para jogos multiplayer
+  async checkGameStatus() {
+      if (this.modoDeJogo === "multiplayer") {
+          const data = await getRanking();
+          if (data) {
+              this.ranking = data;
+              console.log('Ranking atualizado:', this.ranking);
+          }
+      }
+  }
 }
+

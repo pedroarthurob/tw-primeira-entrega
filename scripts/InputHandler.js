@@ -203,7 +203,20 @@ class InputHandler {
         this.gameState.alternarTurno();
     }
 
-    
+    async handleInput(linha, coluna) {
+        if (this.gameState.modoDeJogo === 'multiplayer') {
+            // Chame a API quando for no modo multiplayer
+            const { nick, password } = this.gameState;
+            const response = await notifyMove(nick, password, this.peçaSelecionada.posicao, { linha, coluna });
+            if (response) {
+                console.log('Jogada notificada no servidor.');
+            }
+        }
+
+        if (this.peçaSelecionada) {
+            this.gameState.moverPeca(this.peçaSelecionada, linha, coluna);
+        }
+    }    
 
 }
 
