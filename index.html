@@ -41,6 +41,12 @@
           <option value="dificil">Difícil</option>
         </select>
 
+        <label for="modoDeJogo">Modo de Jogo</label>
+        <select id="modoDeJogo">
+          <option value="local">Local</option>
+          <option value="multiplayer">Multiplayer</option>
+        </select>
+
         <button id="iniciarJogo">Iniciar Jogo</button>
       </div>
 
@@ -51,7 +57,7 @@
     </div>
 
     <div id="mensagem-superior" class="campo-texto"></div>
-    
+
     <div id="tabuleiroContainer">
       <div id="jogador1Pecas" class="pecas-container"></div>
       <div id="tabuleiro"></div>
@@ -91,6 +97,28 @@
       </div>
     </div>
 
+    <!-- Modal de Classificações -->
+    <div id="modal-classificacoes" class="modal">
+      <div class="modal-content modal-content-classificacoes">
+        <span class="close close-classificacoes">&times;</span>
+        <h2>Classificações</h2>
+        <div class="modal-text">
+          <table id="tabela-classificacao">
+            <thead>
+              <tr>
+                <th>Nick</th>
+                <th>Vitórias</th>
+                <th>Jogos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- As classificações serão adicionadas aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- Carregar arquivos JavaScript na ordem correta -->
     <script src="scripts/Tabuleiro.js"></script>
     <script src="scripts/Jogador.js"></script>
@@ -98,6 +126,7 @@
     <script src="scripts/GameState.js"></script>
     <script src="scripts/InputHandler.js"></script>
     <script src="scripts/AI.js"></script>
+    <script src="API/api.js" ></script>
     <script src="scripts/main.js"></script>
   </body>
 </html>

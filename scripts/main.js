@@ -1,36 +1,36 @@
+import { joinGame, registerPlayer } from '../API/api.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  nick = document.getElementById("utilizador").value;
+  password = document.getElementById("password").value;
+
+  function entrar(nick, password) {
+    isLoggedIn = registerPlayer(nick, password);
+  }
+
+  document.getElementById("entrar").addEventListener("click", function (ev) {
+    ev.preventDefault();
+    entrar(nick, password);
+  });
+
   // Referencia o elemento do tabuleiro
   const tabuleiroElement = document.getElementById('tabuleiro');
 
-  // document.getElementById('iniciarJogo').addEventListener('click', () => {
-  //   // Obtém o tamanho do tabuleiro do elemento selecionado
-  //   const tamanhoTabuleiro = parseInt(document.getElementById('tamanhoTabuleiro').value);
-
-  //   const primeiroJogador = document.getElementById('primeiroJogador').value === "jogador" ? "Player 1" : "Player 2";
-
-  //   // Inicializa o estado do jogo
-  //   const gameState = new GameState(tamanhoTabuleiro, primeiroJogador);
-
-  //   // Inicializa o jogo da trilha com o tabuleiro, o estado do jogo, e possíveis configurações adicionais
-  //   const jogoTrilha = new JogoTrilha(tabuleiroElement, gameState, {}); // {} pode ser substituído por configurações se necessário
-
-  //   // Inicia o jogo
-  //   jogoTrilha.iniciarJogo();
-  // });
-  
   document.getElementById('iniciarJogo').addEventListener('click', () => {
     const tamanhoTabuleiro = parseInt(document.getElementById('tamanhoTabuleiro').value);
-    const primeiroJogador = document.getElementById('primeiroJogador').value === "Você" ? "Player 1" : "Player 2";
+    const primeiroJogador = document.getElementById('primeiroJogador').value === "jogador" ? "Player 1" : "Player 2";
     const dificuldade = document.getElementById('nivelIA').value; // nova opção para escolher dificuldade
+    const modoDeJogo = document.getElementById('modoDeJogo').value; // 
 
-    const gameState = new GameState(tamanhoTabuleiro, primeiroJogador, dificuldade, tabuleiroElement);
+    const gameState = new GameState(tamanhoTabuleiro, primeiroJogador, dificuldade, tabuleiroElement, modoDeJogo);
 
     gameState.iniciarJogo();
-    
-  });
 
-  document.getElementById('verClassificacoes').addEventListener('click', () => {
-    alert("Classificações: Em breve...");
+    if (modoDeJogo === "multiplayer") {
+      joinGame(nick, password, tamanhoTabuleiro);
+    }
+
   });
 
   const instrucoes = document.getElementById('modal-instrucoes');
@@ -60,5 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
   modalContent.addEventListener('click', (event) => {
     event.stopPropagation(); // Impede a propagação do clique para a área do fundo
   });
+
+  const modalClassificacoes = document.getElementById('modal-classificacoes');
+  const botaoVerClassificacoes = document.getElementById('verClassificacoes'); // Botão para abrir a classificação
+  const botaoFecharClassificacoes = document.querySelector('.close-classificacoes'); // O botão de fechar no modal
+
+  // Exibe o modal
+  botaoVerClassificacoes.addEventListener('click', () => {
+    modalClassificacoes.style.display = 'flex'; // Exibe o modal
+  });
+
+  // Fecha o modal quando clicar no botão de fechar
+  botaoFecharClassificacoes.addEventListener('click', () => {
+    modalClassificacoes.style.display = 'none';
+  });
+
+  // Fecha o modal quando clicar fora do conteúdo
+  modalClassificacoes.addEventListener('click', (event) => {
+    // Verifica se o clique foi na área de fundo, ou seja, fora do conteúdo do modal
+    if (event.target === modalClassificacoes) {
+      modalClassificacoes.style.display = 'none';
+    }
+  });
+
+  // Impede o clique no conteúdo do modal de fechar o modal
+  const modalContentClassificacoes = document.querySelector('.modal-content-classificacoes'); // A classe que envolve o conteúdo do modal
+  modalContentClassificacoes.addEventListener('click', (event) => {
+    event.stopPropagation(); // Impede a propagação do clique para a área do fundo
+  });
+
+
 
 });

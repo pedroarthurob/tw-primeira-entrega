@@ -345,3 +345,36 @@ html, body {
     margin-bottom: 10px;
     text-align: center;
 }
+
+/* Estilo para a classe 'selecionada' */
+.circle.selecionada {
+  border: 3px solid #FFD700; /* Borda dourada para destacar */
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7); /* Sombra dourada ao redor */
+}
+
+.capturável {
+  border: 2px solid red;  /* Destaque para as peças que podem ser capturadas */
+  box-shadow: 0 0 10px red;  /* Efeito de brilho para chamar atenção */
+}
+
+/* Estilo para a tabela de classificações */
+#tabela-classificacao {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#tabela-classificacao th, #tabela-classificacao td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+#tabela-classificacao th {
+  background-color: #333;
+  color: #fff;
+}
+
+#tabela-classificacao tbody tr:hover {
+  background-color: #f1f1f1;
+}

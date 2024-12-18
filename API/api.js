@@ -33,8 +33,8 @@ export async function registerPlayer(nick, password) {
 }
 
 // Função para entrar em um jogo
-export async function joinGame(nick, password, rows, columns) {
-  const data = await callServer("join", { group, nick, password, size: { rows, columns } });
+export async function joinGame(nick, password, size) {
+  const data = await callServer("join", { group, nick, password, size });
   if (data.error) {
     console.log(data.error);
     return null;
@@ -54,8 +54,8 @@ export async function leaveGame(nick, password) {
 }
 
 // Função para notificar uma jogada
-export async function notifyMove(nick, password, row, column) {
-  const data = await callServer("notify", { nick, password, game, cell: { row, column } });
+export async function notifyMove(nick, password, square, position) {
+  const data = await callServer("notify", { nick, password, game, cell: { square:square, position:position } });
   if (data.error) {
     console.log(data.error);
     return null;

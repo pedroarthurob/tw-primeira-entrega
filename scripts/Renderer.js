@@ -27,31 +27,33 @@ class Renderer {
 
   // Método para adicionar as peças na visualização
   renderizarPecas(gameState) {
-    document.getElementById('jogador1Pecas').style.display = 'flex';
-    document.getElementById('jogador2Pecas').style.display = 'flex';
-
-    const container = document.getElementById('jogador1Pecas');
-    container.innerHTML = ''; // Limpa o container para renderizar as novas peças
-    
-    // Adiciona uma div para cada peça restante
-    for (let i = 0; i < gameState.jogador1.pecasRestantes ; i++) {
-      const pecaDiv = document.createElement('div');
-      pecaDiv.classList.add('peca');
-      pecaDiv.style.backgroundColor = this.cor; // Cor da peça do jogador
-      container.appendChild(pecaDiv);
+    if (gameState.fase !== "Movimentação") {
+      document.getElementById('jogador1Pecas').style.display = 'flex';
+      document.getElementById('jogador2Pecas').style.display = 'flex';
+  
+      const container = document.getElementById('jogador1Pecas');
+      container.innerHTML = ''; // Limpa o container para renderizar as novas peças
+      
+      // Adiciona uma div para cada peça restante
+      for (let i = 0; i < gameState.jogador1.pecasRestantes ; i++) {
+        const pecaDiv = document.createElement('div');
+        pecaDiv.classList.add('peca');
+        pecaDiv.style.backgroundColor = this.cor; // Cor da peça do jogador
+        container.appendChild(pecaDiv);
+      }
+  
+      const container2 = document.getElementById('jogador2Pecas');
+      container2.innerHTML = ''; // Limpa o container para renderizar as novas peças
+      
+      // Adiciona uma div para cada peça restante
+      for (let i = 0; i < gameState.jogador2.pecasRestantes ; i++) {
+        const pecaDiv = document.createElement('div');
+        pecaDiv.classList.add('peca');
+        pecaDiv.style.backgroundColor = this.cor; // Cor da peça do jogador
+        container2.appendChild(pecaDiv);
+      }
+  
     }
-
-    const container2 = document.getElementById('jogador2Pecas');
-    container2.innerHTML = ''; // Limpa o container para renderizar as novas peças
-    
-    // Adiciona uma div para cada peça restante
-    for (let i = 0; i < gameState.jogador2.pecasRestantes ; i++) {
-      const pecaDiv = document.createElement('div');
-      pecaDiv.classList.add('peca');
-      pecaDiv.style.backgroundColor = this.cor; // Cor da peça do jogador
-      container2.appendChild(pecaDiv);
-    }
-
   }
 
   createSquare(size, camada, n, meio) {
@@ -60,11 +62,11 @@ class Renderer {
     const circlePositions = [
       { linha: camada, coluna: camada, top: offset, left: offset },
       { linha: camada, coluna: meio, top: offset, left: offset + size / 2 },
-      { linha: camada, coluna: n, top: offset, left: offset + size },
-      { linha: meio, coluna: n, top: offset + size / 2, left: offset + size },
-      { linha: n, coluna: n, top: offset + size, left: offset + size },
-      { linha: n, coluna: meio, top: offset + size, left: offset + size / 2 },
-      { linha: n, coluna: camada, top: offset + size, left: offset },
+      { linha: camada, coluna: n-camada, top: offset, left: offset + size },
+      { linha: meio, coluna: n-camada, top: offset + size / 2, left: offset + size },
+      { linha: n-camada, coluna: n-camada, top: offset + size, left: offset + size },
+      { linha: n-camada, coluna: meio, top: offset + size, left: offset + size / 2 },
+      { linha: n-camada, coluna: camada, top: offset + size, left: offset },
       { linha: meio, coluna: camada, top: offset + size / 2, left: offset }
     ];
 
