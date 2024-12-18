@@ -128,24 +128,19 @@ html, body {
   padding: 0;
 }
 
-/* Ajuste do #tabuleiroContainer para centralizar o conteúdo */
+/* CSS para o tabuleiro */
 #tabuleiroContainer {
   display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
-  height: 75vh; /* Altura de 75% da altura da janela */
-  width: 100vw; /* Largura de 100% da janela */
-  margin: 0;
-  padding: 0;
-  position: relative; /* Para garantir que o posicionamento relativo do tabuleiro funcione */
+  justify-content: center;
+  align-items: center;
+  height: 75vh; /* Ocupa toda a altura da janela */
+  width: 100vw; /* Ocupa toda a largura da janela */
 }
 
-/* Garantir que o tabuleiro ocupa o espaço adequado */
 #tabuleiro {
-  position: relative; /* Mantém o posicionamento do tabuleiro */
-  margin: 0 auto; /* Certifica que o tabuleiro seja centralizado horizontalmente */
+  position: relative;
+  margin: 0;
 }
-
 /* Estilo para os círculos */
 .circle {
   position: absolute;
@@ -198,13 +193,40 @@ html, body {
   background-color: #ffe4b5;
 }
 
-.pecas-container {
+/* Estilo para os containers de peças */
+#jogador1Pecas, #jogador2Pecas {
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: center;
+  flex-wrap: wrap; /* Faz as peças se organizarem em várias linhas */
+  justify-content: start; /* Alinha as peças no começo da linha */
+  gap: 5px; /* Espaçamento entre as peças */
+  padding: 10px;
+  max-width: 100%; /* Garante que o container ocupe o máximo disponível */
+  background-color: rgba(0, 0, 0, 0.3); /* Fundo transparente cinza */
+  border-radius: 8px; /* Borda arredondada */
+  border: 1px solid #000; /* Apenas para visualizar a borda */
+  display: none; /* Fica oculto até o início do jogo */
+}
+
+/* Estilo para cada peça */
+.peca {
+  width: 30px; /* Largura de cada peça */
+  height: 30px; /* Altura de cada peça */
+  background-color: #3498db; /* Cor da peça, será sobrescrita pelo JavaScript */
+  border-radius: 50%; /* Para tornar a peça redonda */
+  flex-shrink: 0; /* Impede que as peças encolham */
+}
+
+.pecas-container {
+  display: none; /* grid depois de iniciar jogo */
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  gap: 5px; /* Espaço entre as peças */
+  padding: 10px;
+  background-color: #ffe4b5;
+  border-radius: 8px;
   width: 100px;
-  margin: 0 20px;
+  justify-items: center;
+  align-items: center;
+  margin: 0 100px;
 }
 
 .pecas-container .peca {
@@ -296,4 +318,30 @@ html, body {
 
 .modal .close:hover {
   color: #fff;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.red {
+  background-color: red;
+}
+
+/* Estilo dos campos de texto */
+.campo-texto {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Georgia', serif; /* Igual ao logo */
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffe4b5; /* Cor semelhante ao logo */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
 }

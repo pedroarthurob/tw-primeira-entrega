@@ -1,89 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trilha - Jogo</title>
-  <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
-   <!-- Área de Identificação, comandos e configurações pré-jogo -->
-   <div id="identificacao">
-    <input type="text" id="utilizador" placeholder="Utilizador">
-    <input type="password" id="password" placeholder="Palavra-passe">
-    <button id="entrar">Entrar</button>
-  </div>
-
-  <div id="logo">Jogo da Trilha</div>
-
-  <div id="centro">
-    <div id="configuracao">
-      <h2>⚙️</h2>
-      <label for="tamanhoTabuleiro">Tamanho do Tabuleiro:</label>
-      <select id="tamanhoTabuleiro">
-        <option value="2">2 Quadrados</option>
-        <option value="3">3 Quadrados</option>
-        <option value="4">4 Quadrados</option>
-        <option value="5">5 Quadrados</option>
-      </select>
-
-      <label for="primeiroJogador">Primeiro a Jogar:</label>
-      <select id="primeiroJogador">
-        <option value="jogador">Você</option>
-        <option value="computador">Computador</option>
-      </select>
-
-      <label for="nivelIA">Nível da IA:</label>
-      <select id="nivelIA">
-        <option value="facil">Fácil</option>
-        <option value="medio">Médio</option>
-        <option value="dificil">Difícil</option>
-      </select>
-
-      <button id="iniciarJogo">Iniciar Jogo</button> 
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha - Jogo</title>
+    <link rel="stylesheet" href="styles/styles.css">
+  </head>
+  <body>
+    <!-- Área de Identificação, comandos e configurações pré-jogo -->
+    <div id="identificacao">
+      <input type="text" id="utilizador" placeholder="Utilizador">
+      <input type="password" id="password" placeholder="Palavra-passe">
+      <button id="entrar">Entrar</button>
     </div>
 
-    <div id="comandos">
-      <button id="verInstrucoes">Visualizar Instruções</button>
-      <button id="verClassificacoes">Visualizar Classificações</button>
-    </div>
-  </div>
+    <div id="logo">Jogo da Trilha</div>
 
-  <div id="tabuleiroContainer">
-    <div id="jogador1Pecas" class="pecas-container"></div>
-    <div id="tabuleiro"></div>
-    <div id="jogador2Pecas" class="pecas-container"></div>
-  </div>
+    <div id="centro">
+      <div id="configuracao">
+        <h2>⚙️</h2>
+        <label for="tamanhoTabuleiro">Tamanho do Tabuleiro:</label>
+        <select id="tamanhoTabuleiro">
+          <option value="2">2 Quadrados</option>
+          <option value="3">3 Quadrados</option>
+          <option value="4">4 Quadrados</option>
+          <option value="5">5 Quadrados</option>
+          <option value="6">6 Quadrados</option>
+        </select>
 
-  <div id="modal-instrucoes" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Como Jogar: Trilha</h2>
-      <div class="modal-text">
-        <p><strong>Objetivo:</strong> Formar "moinhos" (linhas de 3 peças) que permitem a captura de peças do adversário e assim, reduzir o adversário a 2 peças ou bloquear todos os seus movimentos.</p>
-        <p><strong>Tabuleiro:</strong> Consiste em quadrados concêntricos conectados por linhas. Cada posição válida está nos cantos ou no meio dos lados.</p>
-        <p><strong>Peças:</strong> Cada jogador tem um conjunto de peças coloridas. Elas são colocadas ou movidas estrategicamente no tabuleiro.</p>
-        <p><strong>Como Jogar:</strong> O jogo tem duas fases:
-          <ul>
-            <li>1. Colocação: cada jogador posiciona uma peça alternadamente. Nessa fase não há capturas</li>
-            <li>2. Mover peças para posições adjacentes. Formar moinhos permite a captura de uma peça adversária. Se restarem 3 peças, movimento livre é permitido.</li>
-          </ul>
-        </p>
-        <p><strong>Como Ganhar:</strong> Vence quem deixar o adversário com 2 peças ou sem jogadas possíveis.</p>
-        <p><strong>Dicas:</strong> Planeje moinhos, proteja suas peças e bloqueie o oponente.</p>
+        <label for="primeiroJogador">Primeiro a Jogar:</label>
+        <select id="primeiroJogador">
+          <option value="jogador">Você</option>
+          <option value="computador">Computador</option>
+        </select>
+
+        <label for="nivelIA">Nível da IA:</label>
+        <select id="nivelIA">
+          <option value="facil">Fácil</option>
+          <option value="medio">Médio</option>
+          <option value="dificil">Difícil</option>
+        </select>
+
+        <button id="iniciarJogo">Iniciar Jogo</button>
+      </div>
+
+      <div id="comandos">
+        <button id="verInstrucoes">Visualizar Instruções</button>
+        <button id="verClassificacoes">Visualizar Classificações</button>
       </div>
     </div>
-  </div>
-  
-  
 
-  <!-- Carregar arquivos JavaScript na ordem correta -->
-  <script src="scripts/Tabuleiro.js"></script>
-  <script src="scripts/Jogador.js"></script>
-  <script src="scripts/Renderer.js"></script>
-  <script src="scripts/GameState.js"></script>
-  <script src="scripts/InputHandler.js"></script>
-  <script src="scripts/AI.js"></script>
-  <script src="scripts/main.js"></script>
-</body>
+    <div id="mensagem-superior" class="campo-texto"></div>
+    
+    <div id="tabuleiroContainer">
+      <div id="jogador1Pecas" class="pecas-container"></div>
+      <div id="tabuleiro"></div>
+      <div id="jogador2Pecas" class="pecas-container"></div>
+    </div>
+
+    <div id="mensagem-inferior" class="campo-texto"></div>
+
+    <div id="modal-instrucoes" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Como Jogar: Trilha</h2>
+        <div class="modal-text">
+          <p><strong>Objetivo:</strong> Formar "moinhos" (linhas de 3 peças) que
+            permitem a captura de peças do adversário e assim, reduzir o
+            adversário a 2 peças ou bloquear todos os seus movimentos.</p>
+          <p><strong>Tabuleiro:</strong> Consiste em quadrados concêntricos
+            conectados por linhas. Cada posição válida está nos cantos ou no
+            meio dos lados.</p>
+          <p><strong>Peças:</strong> Cada jogador tem um conjunto de peças
+            coloridas. Elas são colocadas ou movidas estrategicamente no
+            tabuleiro.</p>
+          <p><strong>Como Jogar:</strong> O jogo tem duas fases:
+            <ul>
+              <li>1. Colocação: cada jogador posiciona uma peça alternadamente.
+                Nessa fase não há capturas</li>
+              <li>2. Mover peças para posições adjacentes. Formar moinhos
+                permite a captura de uma peça adversária. Se restarem 3 peças,
+                movimento livre é permitido.</li>
+            </ul>
+          </p>
+          <p><strong>Como Ganhar:</strong> Vence quem deixar o adversário com 2
+            peças ou sem jogadas possíveis.</p>
+          <p><strong>Dicas:</strong> Planeje moinhos, proteja suas peças e
+            bloqueie o oponente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carregar arquivos JavaScript na ordem correta -->
+    <script src="scripts/Tabuleiro.js"></script>
+    <script src="scripts/Jogador.js"></script>
+    <script src="scripts/Renderer.js"></script>
+    <script src="scripts/GameState.js"></script>
+    <script src="scripts/InputHandler.js"></script>
+    <script src="scripts/AI.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
 </html>

@@ -1,26 +1,57 @@
 class Renderer {
-  constructor(tabuleiroElement, tamanhoTabuleiro) {
+  constructor(tabuleiroElement, tamanhoTabuleiro, gameState) {
     this.tabuleiroElement = tabuleiroElement;
     this.tamanhoTabuleiro = tamanhoTabuleiro;
     this.baseSize = 100;
+    this.gameState = this.gameState;
   }
   
   renderTabuleiro() {
     // Limpar o conteúdo do tabuleiro antes de renderizar novamente
     this.tabuleiroElement.innerHTML = '';
-    
+    this.tabuleiroElement.style.width = `${this.baseSize * this.tamanhoTabuleiro}px`;
+    this.tabuleiroElement.style.height = `${this.baseSize * this.tamanhoTabuleiro}px`;
     let innerSquareSize;
     // Para cada camada do tabuleiro, recriar os quadrados e círculos.
     for (let camada = 0; camada < this.tamanhoTabuleiro; camada++) {
       const size = this.baseSize * (this.tamanhoTabuleiro - camada);
-      this.createSquare(size, camada);
+      const tamanho = 2*this.tamanhoTabuleiro;//2*n+1 mas o tamanho aq já é +1
+      const meio = Math.floor(tamanho/2);
+      this.createSquare(size, camada, tamanho, meio);
       if (camada === this.tamanhoTabuleiro - 1) innerSquareSize = size;
     }
 
     // Criar as linhas centrais do tabuleiro
     this.createCenterLines(this.baseSize * this.tamanhoTabuleiro, innerSquareSize);
+  }
 
-    // Agora, iteramos sobre o tabuleiro 
+  // Método para adicionar as peças na visualização
+  renderizarPecas(gameState) {
+    document.getElementById('jogador1Pecas').style.display = 'flex';
+    document.getElementById('jogador2Pecas').style.display = 'flex';
+
+    const container = document.getElementById('jogador1Pecas');
+    container.innerHTML = ''; // Limpa o container para renderizar as novas peças
+    
+    // Adiciona uma div para cada peça restante
+    for (let i = 0; i < gameState.jogador1.pecasRestantes ; i++) {
+      const pecaDiv = document.createElement('div');
+      pecaDiv.classList.add('peca');
+      pecaDiv.style.backgroundColor = this.cor; // Cor da peça do jogador
+      container.appendChild(pecaDiv);
+    }
+
+    const container2 = document.getElementById('jogador2Pecas');
+    container2.innerHTML = ''; // Limpa o container para renderizar as novas peças
+    
+    // Adiciona uma div para cada peça restante
+    for (let i = 0; i < gameState.jogador2.pecasRestantes ; i++) {
+      const pecaDiv = document.createElement('div');
+      pecaDiv.classList.add('peca');
+      pecaDiv.style.backgroundColor = this.cor; // Cor da peça do jogador
+      container2.appendChild(pecaDiv);
+    }
+
   }
 
   createSquare(size, camada, n, meio) {

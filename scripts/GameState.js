@@ -1,17 +1,22 @@
 class GameState {
   constructor(tamanhoTabuleiro, primeiroJogador, dificuldade, tabuleiroElement) {
     this.tamanhoTabuleiro = tamanhoTabuleiro;
-    this.fase = 'colocacao'; // Pode ser 'colocacao', 'movimentacao'
+    this.fase = 'Colocação'; // Pode ser 'colocacao', 'movimentacao'
     this.turnoAtual = primeiroJogador; // Ou "Player 2 / AI"
     this.jogador1 = new Jogador("blue","Player 1",tamanhoTabuleiro);
     this.jogador2 = new Jogador("red", "Player 2",tamanhoTabuleiro);
     this.tabuleiro = new Tabuleiro(tamanhoTabuleiro); // Matriz representando o tabuleiro
     this.dificuldade = dificuldade;
-    this.renderer = new Renderer(tabuleiroElement, tamanhoTabuleiro);
+    this.renderer = new Renderer(tabuleiroElement, tamanhoTabuleiro, this);
+    this.inputHandler = new InputHandler(this.renderer, this);
   }
 
   iniciarJogo() {
     this.renderer.renderTabuleiro();
+    this.renderer.renderizarPecas(this);
+    console.log(this.jogador1.pecasRestantes);
+    document.getElementById("mensagem-superior").textContent = "Turno: " + this.turnoAtual;
+    document.getElementById("mensagem-inferior").textContent = "Fase: Colocação";
   }
 
   alternarTurno() {
@@ -19,16 +24,16 @@ class GameState {
   }
 
   passarFase() {
-    if (this.fase === 'colocacao' && this.pecasJogador1 === 0 && this.pecasJogador2 === 0) {
-      this.fase = 'movimentacao';
-    } else if (this.fase === 'movimentacao' && (this.pecasJogador1 < 3 || this.pecasJogador2 < 3)) {
+    if (this.fase === 'Colocação' && this.pecasJogador1 === 0 && this.pecasJogador2 === 0) {
+      this.fase = 'Movimentação';
+    } else if (this.fase === 'Movimentação' && (this.pecasJogador1 < 3 || this.pecasJogador2 < 3)) {
       this.fase = 'captura';
     }
   }
 
   // Posicionar uma peça no tabuleiro
   posicionarPeca(jogador, i, j) {
-    if (this.fase === 'colocacao') {
+    if (this.fase === 'Colocação') {
       if (jogador.name === 'Player 1' && this.jogador1.pecasRestantes > 0) {
         this.jogador1.posicionarPeca();
         this.tabuleiro.posicionarPeca(this.jogador1, i, j);

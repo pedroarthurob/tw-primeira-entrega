@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameState = new GameState(tamanhoTabuleiro, primeiroJogador, dificuldade, tabuleiroElement);
 
     gameState.iniciarJogo();
+    
   });
 
   document.getElementById('verClassificacoes').addEventListener('click', () => {

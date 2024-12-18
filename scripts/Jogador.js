@@ -8,7 +8,7 @@ class Jogador {
 
   capturarPeca() {
     this.pecasCapturadas++;
-  }
+  } 
 
   posicionarPeca() {
     this.pecasRestantes--;

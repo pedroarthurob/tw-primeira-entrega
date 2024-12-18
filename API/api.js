@@ -1,4 +1,6 @@
 const API_BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
+const group = 20;
+
 
 // Função para registrar um jogador
 export async function registerPlayer(nick, password) {
