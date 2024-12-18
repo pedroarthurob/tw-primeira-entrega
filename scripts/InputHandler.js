@@ -56,7 +56,6 @@ class InputHandler {
         const linha = parseInt(circle.dataset.linha, 10);
         const coluna = parseInt(circle.dataset.coluna, 10);
 
-
         // Colocação de peça na fase de colocação
         if (!circle.classList.contains('Player 1') && !circle.classList.contains('Player 2') && this.gameState.fase === 'Colocação') {
             // Só permite colocar a peça se for a vez do jogador e ainda houver peças restantes
@@ -82,7 +81,7 @@ class InputHandler {
 
             // Garantir que o hover não ocorra mais neste círculo
             circle.classList.add('no-hover');
-            
+
         } else if (this.gameState.fase === 'Movimentação') {
             if (!this.peçaSelecionada) {
                 // SELEÇÃO DA PEÇA
@@ -106,6 +105,7 @@ class InputHandler {
 
         console.log("jogador 1: " + this.gameState.jogador1.pecasRestantes);
         console.log("jogador 2: " + this.gameState.jogador2.pecasRestantes);
+        
 
         document.getElementById("mensagem-superior").textContent = "Turno: " + this.gameState.turnoAtual;
         document.getElementById("mensagem-inferior").textContent = "Fase: " + this.gameState.fase;
