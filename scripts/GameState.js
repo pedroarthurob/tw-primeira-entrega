@@ -26,8 +26,6 @@ class GameState {
   passarFase() {
     if (this.fase === 'Colocação' && this.pecasJogador1 === 0 && this.pecasJogador2 === 0) {
       this.fase = 'Movimentação';
-    } else if (this.fase === 'Movimentação' && (this.pecasJogador1 < 3 || this.pecasJogador2 < 3)) {
-      this.fase = 'captura';
     }
   }
 
