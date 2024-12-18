@@ -2,8 +2,8 @@ import { joinGame, registerPlayer } from '../API/api.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  nick = document.getElementById("utilizador").value;
-  password = document.getElementById("password").value;
+  const nick = document.getElementById("utilizador").value;
+  const password = document.getElementById("password").value;
 
   function entrar(nick, password) {
     isLoggedIn = registerPlayer(nick, password);

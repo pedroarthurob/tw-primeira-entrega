@@ -1,5 +1,3 @@
-import { registerPlayer } from "../API/api";
-
 class InputHandler {
     constructor(renderer, gameState) {
         this.renderer = renderer;
@@ -65,39 +63,40 @@ class InputHandler {
 
     configurarClique(circle) {
         const index = circle.dataset.index;
-
         const [linha, coluna] = index.slice(1, -1).split(',').map(Number);
-
+    
         // Colocação de peça na fase de colocação
         if (!circle.classList.contains(this.gameState.jogador1.cor) && !circle.classList.contains(this.gameState.jogador2.cor) && this.gameState.fase === 'Colocação') {
             // Só permite colocar a peça se for a vez do jogador e ainda houver peças restantes
             if (this.gameState.turnoAtual.nome === "Player 1" && this.gameState.jogador1.pecasRestantes > 0) {
                 circle.classList.add(this.gameState.jogador1.cor); // Marca o círculo com a cor do Player 1
                 this.gameState.posicionarPeca(this.gameState.jogador1, linha, coluna);
-                // this.gameState.jogador1.posicionarPeca();
             } else if (this.gameState.turnoAtual.nome === "Player 2" && this.gameState.jogador2.pecasRestantes > 0) {
                 circle.classList.add(this.gameState.jogador2.cor); // Marca o círculo com a cor do Player 2
                 this.gameState.posicionarPeca(this.gameState.jogador2, linha, coluna);
-                // this.gameState.jogador2.posicionarPeca();
             }
-
+            // Atualiza o contador de peças restantes para os jogadores
+            this.renderer.renderizarPecas(this.gameState);
+            
             // Passar para a próxima fase após posicionar uma peça
             this.gameState.passarFase();
             this.gameState.alternarTurno();
-
-            // Atualiza o contador de peças restantes para os jogadores
-            this.renderer.renderizarPecas(this.gameState);
-
+    
+            if (this.gameState.fase === "Movimentação") {
+                this.gameState.jogador1.pecasRestantes = this.gameState.tamanhoTabuleiro * 3;
+                this.gameState.jogador1.pecasRestantes = this.gameState.tamanhoTabuleiro * 3;
+            }
+            
         } else if (this.gameState.fase === 'Movimentação') {
             // Verificar se o jogador tem movimentos válidos antes de continuar
             const existemMovimentosValidos = this.gameState.tabuleiro.movimentosValidos(this.gameState.turnoAtual);
-
+    
             if (!existemMovimentosValidos) {
                 console.log("Não há movimentos válidos para o jogador " + this.gameState.turnoAtual.nome);
                 document.getElementById("mensagem-superior").textContent = "Turno: " + this.gameState.turnoAtual.nome + "\n" + "Você não tem movimentos válidos!";
-                return; // Impede qualquer movimento se não houver movimentos válidos
+                this.gameState.alternarTurno();
             }
-
+    
             if (!this.peçaSelecionada) {
                 // SELEÇÃO DA PEÇA
                 // Verifica se o jogador clicou em uma peça do turno atual
@@ -107,33 +106,38 @@ class InputHandler {
                 }
             } else {
                 // MOVIMENTAÇÃO DA PEÇA
-                // Verifica se a casa é válida para movimento
-                if (this.gameState.isDestinoValido(this.peçaSelecionada, linha, coluna)) {
-                    const { linha: i, coluna: j } = this.peçaSelecionada;
-                    this.gameState.moverPeca(this.gameState.turnoAtual, i, j, linha, coluna); // Move a peça
-                    circle.classList.add(this.gameState.turnoAtual.cor);
-                    this.peçaSelecionada.circle.classList.remove(this.gameState.turnoAtual.cor);
-                    this.peçaSelecionada.circle.classList.remove('selecionada'); // Remove o destaque visual da peça anterior
-                    this.peçaSelecionada = null; // Reseta a seleção
-
-                    if (this.gameState.tabuleiro.verificaMoinho(linha, coluna)) {
-                        console.log(this.gameState.turnoAtual.nome + " formou um moinho");
-                        document.getElementById("mensagem-superior").textContent = "Turno: " + this.gameState.turnoAtual.nome + "\n" + "Você formou um Moinho";
-                        document.getElementById("mensagem-inferior").textContent = "Fase: Captura";
-
-                        // Captura de peça adversária
-                        this.capturaAtiva = true;
-                        this.destacarPecasAdversarias();
-                    } else {
-                        this.gameState.alternarTurno();
-                    }
-
+                if (this.peçaSelecionada.circle === circle) {
+                    // Se a peça clicada for a mesma já selecionada, desmarque ela
+                    this.peçaSelecionada.circle.classList.remove('selecionada'); // Remove a classe 'selecionada'
+                    this.peçaSelecionada = null; // Reseta a peça selecionada
                 } else {
-                    console.log("Movimento inválido!");
+                    // Verifica se a casa é válida para movimento
+                    if (this.gameState.isDestinoValido(this.peçaSelecionada, linha, coluna)) {
+                        const { linha: i, coluna: j } = this.peçaSelecionada;
+                        this.gameState.moverPeca(this.gameState.turnoAtual, i, j, linha, coluna); // Move a peça
+                        circle.classList.add(this.gameState.turnoAtual.cor);
+                        this.peçaSelecionada.circle.classList.remove(this.gameState.turnoAtual.cor);
+                        this.peçaSelecionada.circle.classList.remove('selecionada'); // Remove o destaque visual da peça anterior
+                        this.peçaSelecionada = null; // Reseta a seleção
+    
+                        if (this.gameState.tabuleiro.verificaMoinho(linha, coluna)) {
+                            console.log(this.gameState.turnoAtual.nome + " formou um moinho");
+                            document.getElementById("mensagem-superior").textContent = "Turno: " + this.gameState.turnoAtual.nome + "\n" + "Você formou um Moinho";
+                            document.getElementById("mensagem-inferior").textContent = "Fase: Captura";
+    
+                            // Captura de peça adversária
+                            this.capturaAtiva = true;
+                            this.destacarPecasAdversarias();
+                        } else {
+                            this.gameState.alternarTurno();
+                        }
+                    } else {
+                        console.log("Movimento inválido!");
+                    }
                 }
             }
         }
-
+    
         if (this.gameState.verificarEmpate()) {
             document.getElementById("mensagem-superior").textContent = "Fim de Jogo! \n Empate";
         } else if (this.gameState.verificarDerrota()) {
@@ -146,6 +150,7 @@ class InputHandler {
             console.log(this.gameState.jogador2.pecasRestantes);
         }
     }
+    
 
     // Função para destacar as peças adversárias
     destacarPecasAdversarias() {
@@ -172,6 +177,9 @@ class InputHandler {
         // Remove a cor da peça adversária (não a remove do tabuleiro)
         const corAdversaria = this.gameState.turnoAtual === this.gameState.jogador1 ? this.gameState.jogador2.cor : this.gameState.jogador1.cor;
         circle.classList.remove(corAdversaria);
+        
+        const player = this.gameState.turnoAtual === this.gameState.jogador1 ? this.gameState.jogador1 : this.gameState.jogador2;
+        player.capturarPeca();
 
         // Marca que a captura foi realizada
         this.capturaAtiva = false; // Desativa a captura após uma peça ser capturada

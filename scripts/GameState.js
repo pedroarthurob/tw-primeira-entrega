@@ -22,7 +22,7 @@ class GameState {
 
   alternarTurno() {
     this.turnoAtual = this.turnoAtual === this.jogador1 ? this.jogador2 : this.jogador1;
-    if (this.fase === 'Movimentação' && this.jogador1.pecasRestantes <= 3 && this.jogador2.pecasRestantes <= 3) {
+    if (this.fase === 'Movimentação' && this.jogador1.pecasRestantes == 3 && this.jogador2.pecasRestantes == 3) {
       this.jogadasSemVitoria++;
     }
   }
@@ -30,8 +30,6 @@ class GameState {
   passarFase() {
     if (this.fase === 'Colocação' && this.jogador1.pecasRestantes === 0 && this.jogador2.pecasRestantes === 0) {
       this.fase = 'Movimentação';
-      this.jogador1.pecasRestantes = this.tamanhoTabuleiro*3;
-      this.jogador2.pecasRestantes = this.tamanhoTabuleiro*3;
     }
   }
 
@@ -93,7 +91,9 @@ class GameState {
 
   // Função que verifica se um jogador perdeu (ficou com 2 peças)
   verificarDerrota() {
-    if (this.turnoAtual.pecasRestantes === 2 && this.fase === 'Movimentação') {
+    console.log("calc. derrota", this.turnoAtual.pecasRestantes, this.fase);
+    const adversario = this.turnoAtual === this.jogador1 ? this.jogador2 : this.jogador1;
+    if ((this.turnoAtual.pecasRestantes === 2 || adversario.pecasRestantes === 2) && this.fase === 'Movimentação') {
       console.log(`${this.turnoAtual.nome} perdeu o jogo!`);
       return true; // Jogo terminou com derrota
     }
@@ -103,6 +103,7 @@ class GameState {
   // Função que verifica se o jogo terminou por empate
   verificarEmpate() {
     // Empate ocorre se ambos tiverem 3 peças e não houver jogada válida por 10 turnos
+    console.log("calc. empate", this.jogador1.pecasRestantes, this.jogador2.pecasRestantes, this.jogadasSemVitoria);
     if (this.jogador1.pecasRestantes === 3 && this.jogador2.pecasRestantes === 3 && this.jogadasSemVitoria >= 10) {
       console.log("Empate! Nenhum vencedor após 10 jogadas.");
       return true; // Jogo terminou com empate

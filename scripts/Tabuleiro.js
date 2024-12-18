@@ -72,8 +72,6 @@ class Tabuleiro {
         this.matrix[i][j] = jogador.nome;
     }
 
-    // preciso de jogador aqui? incremento decremento aqui?
-    // R: Não, responsabilidade fica pra GameState
     retirarPeca(i, j) {
         this.matrix[i][j] = 0;
     }
@@ -115,10 +113,6 @@ class Tabuleiro {
             this.matrix[novoI][novoJ] === 0 &&
             existe;
 
-    }
-
-    validarPosicao(i, j) {
-        return this.matrix[i][j] === 0;
     }
 
     criarMatriz(n) {
